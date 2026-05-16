@@ -405,11 +405,12 @@ function renderEnd() {
       <div class="end-header">
         <div class="big-emoji">${emoji}</div>
         <h2>${msg}</h2>
-        <div class="name">ใช้เวลา ${duration} วินาที</div>
+        <div class="name">${escapeHtml(userName)} • ใช้เวลา ${duration} วินาที</div>
         <div class="end-score">${correctCount} / ${total}</div>
         <div class="end-pct">${pct}%</div>
       </div>
       ${memeHtml}
+      <div id="syncStatus" class="sync-status pending">⏳ กำลังบันทึกคะแนน...</div>
       ${wrongHtml}
       <div class="controls" style="justify-content: center; margin-top: 28px;">
         <button class="btn btn-primary" onclick="restartQuiz()">ทำใหม่ (สุ่มข้อใหม่)</button>
@@ -417,7 +418,8 @@ function renderEnd() {
       </div>
     </div>`;
   
-  // Score not submitted (no login mode)
+  // Send score to Google Sheet
+  submitScore(correctCount, total, pct, duration);
 }
 
 function submitScore(score, total, percent, duration) {
@@ -451,7 +453,7 @@ function submitScore(score, total, percent, duration) {
 }
 
 // Start
-startQuiz();
+renderLogin();
 </script>
 </body>
 </html>
